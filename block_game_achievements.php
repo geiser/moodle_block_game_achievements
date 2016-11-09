@@ -50,12 +50,20 @@ class block_game_achievements extends block_base
     public function get_content()
 	{
 		global $DB, $USER;
-		$this->content = new stdClass;
-		
+        $this->content = new stdClass;
+
 		if(is_student($USER->id)) // If user is a student
 		{
 			$this->content->text = '';
-			$this->content->footer = '';
+            $this->content->footer = '';
+
+            if ((strpos($this->title, '(Socializador)') !== false) &&
+                !$DB->record_exists_sql('SELECT * FROM {groups_members} m
+                    INNER JOIN {groups} g ON g.id = m.groupid
+                    WHERE g.idnumber = :idnumber AND m.userid = :userid',
+                    array('idnumber'=>'socializer', 'userid'=>$USER->id))) {
+                return;
+            }
 			
 			$achievements_text_list = array();
 			$unlocked_achievements_text_list = array();
