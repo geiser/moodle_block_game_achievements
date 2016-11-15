@@ -51,20 +51,24 @@ class block_game_achievements extends block_base
 	{
 		global $DB, $USER;
         $this->content = new stdClass;
+        
+        //uglyhack to hide ranking based on the groupname indicated in the title 
+        $matches = array(); preg_match("/\(\w+\)/", $this->title, $matches);
+        if (user_has_role_assignment($USER->id, 5) && !empty($matches)) {
+            if (!$DB->record_exists_sql('SELECT * FROM {groups_members} m
+                    INNER JOIN {groups} g ON g.id = m.groupid
+                    WHERE g.name = :name AND m.userid = :userid',
+                    array('name'=>substr($matches[0],1,-1),
+                          'userid'=>$USER->id))) {
+                return ;
+            }
+        }
 
 		if(is_student($USER->id)) // If user is a student
 		{
 			$this->content->text = '';
             $this->content->footer = '';
-
-            if ((strpos($this->title, '(Socializador)') !== false) &&
-                !$DB->record_exists_sql('SELECT * FROM {groups_members} m
-                    INNER JOIN {groups} g ON g.id = m.groupid
-                    WHERE g.idnumber = :idnumber AND m.userid = :userid',
-                    array('idnumber'=>'socializer', 'userid'=>$USER->id))) {
-                return;
-            }
-			
+        
 			$achievements_text_list = array();
 			$unlocked_achievements_text_list = array();
 			$group_achievements_text_list = array();
@@ -199,7 +203,13 @@ class block_game_achievements extends block_base
 		{
 			$this->content->text = 'Hello';
 			$this->content->footer = '';
-		}
+        }
+
+        //uglyhack to remove what is in parenteses
+        if(user_has_role_assignment($USER->id, 5)) {
+            // Verificar se é estudante? inverter e colcoar contexto pode ser melhor
+            $this->title = preg_replace(array("/\(\w+\)/"), array(""), $this->title);
+        }
 		
 		return $this->content;
     }

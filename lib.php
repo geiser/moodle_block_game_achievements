@@ -262,7 +262,7 @@ function get_achievements($blockinstanceid)
 		}
 	}
 	
-	usort($achievements, function ($a, $b) {
+	/*usort($achievements, function ($a, $b) {
 		if($a->event < $b->event)
 		{
 			return -1;
@@ -283,7 +283,7 @@ function get_achievements($blockinstanceid)
 		{
 			return 0;
 		}
-	});
+    });*/
 	
 	return $achievements;
 }
