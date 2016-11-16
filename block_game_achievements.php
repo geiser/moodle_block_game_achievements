@@ -106,22 +106,37 @@ class block_game_achievements extends block_base
 					}
 				
 					if($user_group_unlocked_achievement) // Se algum grupo do usuário atingiu a conquista
-					{
+                    {
+
 						if(in_array($achievement->event, self::$resource_events))
-						{
-							$group_unlocked_achievements_text_list[] = '<li>' . (isset($achievement->name) ? $achievement->name . ': ' : '') . $this->get_block_conditions_text($achievement) . ' (' . implode(', ', $achievement_group_names_list) . ')' . '</li>';
+                        {
+                            $str_descr = empty($achievement->description) ?
+                                $this->get_block_conditions_text($achievement) .
+                                ' (' . implode(', ', $achievement_group_names_list) . ')' :
+                                $achievement->description;
+
+							$group_unlocked_achievements_text_list[] = '<li>' . (isset($achievement->name) ? $achievement->name . ': ' : '') . $str_descr . '</li>';
 						}
 						else
-						{
+                        {
 							$description = is_null($achievement->description) ? $events[$achievement->event] : $achievement->description;
 							$group_unlocked_achievements_text_list[] = '<li>' . (isset($achievement->name) ? $achievement->name . ': ' : '') . $description . ' ' . $achievement->times . ' ' . get_string('block_times', 'block_game_achievements') . ' (' . implode(', ', $achievement_group_names_list) . ')' . '</li>';
 						}
 					}
 					else if(!isset($group_achievements_text_list[$achievement->event])) // Senão
-					{
+                    {
+
+
+
 						if(in_array($achievement->event, self::$resource_events))
-						{
-							$group_achievements_text_list[] = '<li>'. (isset($achievement->name) ? $achievement->name . ': ' : '')  . $this->get_block_conditions_text($achievement) . (!empty($achievement_group_names_list) ? ' (' . implode(', ', $achievement_group_names_list) . ')' : '') . '</li>';
+                        {
+                            $str_descr = empty($achievement->description) ?
+                                $this->get_block_conditions_text($achievement) .
+                                (!empty($achievement_group_names_list) ?
+                                ' (' . implode(', ', $achievement_group_names_list) . ')' : '') :
+                                $achievement->description;
+                            $group_achievements_text_list[] = '<li>'. (isset($achievement->name) ?
+                                $achievement->name . ': ' : '')  . $str_descr . '</li>';
 						}
 						else
 						{
@@ -137,8 +152,14 @@ class block_game_achievements extends block_base
 					if($unlocked_achievement)
 					{
 						if(in_array($achievement->event, self::$resource_events))
-						{
-							$unlocked_achievements_text_list[] = '<li>' . (isset($achievement->name) ? $achievement->name . ': ' : '') . $this->get_block_conditions_text($achievement) . '</li>';
+                        {
+                            $str_descr = empty($achievement->description) ?
+                                $this->get_block_conditions_text($achievement) :
+                                $achievement->description;
+
+                            $unlocked_achievements_text_list[] = '<li>' .
+                                (isset($achievement->name) ? $achievement->name . ': ' : '') .
+                                $str_descr . '</li>';
 						}
 						else
 						{
@@ -147,7 +168,8 @@ class block_game_achievements extends block_base
 						}
 					}
 					else if(!isset($achievements_text_list[$achievement->event]))
-					{
+                    {
+
 						if(!(satisfies_conditions($achievement->conditions, $this->page->course->id, $USER->id) && (in_array($achievement->event, self::$resource_events) || satisfies_block_conditions($achievement, $this->page->course->id, $USER->id))))
 						{
 							continue;
@@ -164,8 +186,11 @@ class block_game_achievements extends block_base
 						$times = $DB->count_records_sql($sql, $params);
 						
 						if(in_array($achievement->event, self::$resource_events))
-						{
-							$achievements_text_list[] = '<li>' . (isset($achievement->name) ? $achievement->name . ': ' : '') . $this->get_block_conditions_text($achievement) . '</li>';
+                        {
+                            $str_descr = empty($achievement->description) ?
+                                $this->get_block_conditions_text($achievement) :
+                                $achievement->description;
+							$achievements_text_list[] = '<li>' . (isset($achievement->name) ? $achievement->name . ': ' : '') . $str_descr . '</li>';
 						}
 						else
 						{
