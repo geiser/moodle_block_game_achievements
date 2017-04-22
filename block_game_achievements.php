@@ -203,15 +203,15 @@ class block_game_achievements extends block_base
 			
 			if(!empty($achievements_text_list))
 			{
-				$this->content->text .= '<p>' . get_string('block_achievements', 'block_game_achievements') . ':<ul>' . implode($achievements_text_list) . '</ul></p>';
+				$this->content->text .= '<p>' . get_string('block_achievements', 'block_game_achievements') . ':<ul>' . implode(array_slice($achievements_text_list, 0, 3)) . '</ul></p>';
 			}
 			if(!empty($unlocked_achievements_text_list))
 			{
-				$this->content->text .= '<p>' . get_string('block_unlocked_achievements', 'block_game_achievements') . ':<ul>' . implode($unlocked_achievements_text_list) . '</ul></p>';
+				$this->content->text .= '<p>' . get_string('block_unlocked_achievements', 'block_game_achievements') . ':<ul>' . end($unlocked_achievements_text_list) . '</ul></p>';
 			}
 			if(!empty($group_achievements_text_list))
 			{
-				$this->content->text .= '<p>' . get_string('block_group_achievements', 'block_game_achievements') . ':<ul>' . implode($group_achievements_text_list) . '</ul></p>';
+				$this->content->text .= '<p>' . get_string('block_group_achievements', 'block_game_achievements') . ':<ul>' . end($group_achievements_text_list) . '</ul></p>';
 			}
 			if(!empty($group_unlocked_achievements_text_list))
 			{

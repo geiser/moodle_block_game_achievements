@@ -67,10 +67,10 @@ $string['achievementdelete_message'] = 'Você tem certeza que deseja remover est
 $string['achievementdelete_submit'] = 'Remover';
 
 $string['block_times'] = 'vezes';
-$string['block_unlocked_achievements'] = 'Conquistas desbloqueadas';
+$string['block_unlocked_achievements'] = 'Última conquista desbloqueada';
 $string['block_achievements'] = 'Conquistas';
 $string['block_achievementlist'] = 'Ver mais';
-$string['block_group_unlocked_achievements'] = 'Conquistas de grupo desbloqueadas';
+$string['block_group_unlocked_achievements'] = 'Última conquista de grupo desbloqueada';
 $string['block_group_achievements'] = 'Conquistas de grupo';
 $string['block_conditions_reach'] = 'Atingir';
 $string['block_conditions_points'] = 'pontos';
