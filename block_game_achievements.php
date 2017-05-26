@@ -203,7 +203,7 @@ class block_game_achievements extends block_base
 			
 			if(!empty($achievements_text_list))
 			{
-				$this->content->text .= '<p>' . get_string('block_achievements', 'block_game_achievements') . ':<ul>' . implode(array_slice($achievements_text_list, 0, 3)) . '</ul></p>';
+				$this->content->text .= '<p>' . get_string('block_achievements', 'block_game_achievements') . ':<ul>' . implode(array_slice($achievements_text_list, -3, 3)) . '</ul></p>';
 			}
 			if(!empty($unlocked_achievements_text_list))
 			{
